@@ -1,5 +1,6 @@
 import { Layout as AntLayout } from 'antd';
 import styled from 'styled-components';
+import GoogleMap from './GoogleMap';
 
 const { Header, Content, Footer: AntComponent } = AntLayout;
 
@@ -9,7 +10,7 @@ const Logo = styled.h2`
 
 const Inner = styled(Content)`
     min-height:280px;
-    padding:24px;
+    padding:0;
     background:#fff;
 `;
 const Layout = styled(AntLayout)`
@@ -25,8 +26,9 @@ export default function Page() {
             <Header>
                 <Logo>Wikipedia Map</Logo>
             </Header>
-            <Inner></Inner>
-            <Footer>Netguru College React</Footer>
+            <Inner>
+                <GoogleMap />
+            </Inner>
         </Layout>
     )
 }
