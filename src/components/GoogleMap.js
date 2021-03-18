@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
 import styled from 'styled-components';
+import WikipediaApi from '../services/api/WikipediaApi';
 
 const GoogleMapContainer = styled.div`
 width:100%;
@@ -13,6 +15,18 @@ const katowicePosition = {
 const defaultZoom = 14
 
 export default function GoogleMap() {
+
+    useEffect(() => {
+        const getData = async () => {
+            let { query: { geosearch: data } } = await WikipediaApi.getArticles({
+                coord: katowicePosition,
+                limit: 10
+            });
+            console.log({ data });
+        }
+        getData();
+    }, [])
+
     return (
         <GoogleMapContainer>
             <GoogleMapReact
