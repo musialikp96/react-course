@@ -17,7 +17,7 @@ export default function GoogleMap() {
         <GoogleMapContainer>
             <GoogleMapReact
                 bootstrapURLKeys={{
-                    key: 'AIzaSyD5lXuWjwGpn5aodgkuA4nkjSpsKKIPnU0',
+                    key: process.env.REACT_APP_GOOGLE_API_KEY,
                     libraries: ['places']
                 }}
                 defaultCenter={katowicePosition}
