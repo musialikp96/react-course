@@ -2,7 +2,7 @@ import { Layout as AntLayout } from 'antd';
 import styled from 'styled-components';
 import GoogleMap from './GoogleMap';
 
-const { Header, Content, Footer: AntComponent } = AntLayout;
+const { Header, Content } = AntLayout;
 
 const Logo = styled.h2`
     color:#fff;
@@ -15,9 +15,6 @@ const Inner = styled(Content)`
 `;
 const Layout = styled(AntLayout)`
     min-height:100vh;
-`;
-const Footer = styled(AntComponent)`
-    text-align:center;
 `;
 
 export default function Page() {
