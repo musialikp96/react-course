@@ -1,6 +1,7 @@
 import { Layout as AntLayout } from 'antd';
 import styled from 'styled-components';
 import GoogleMap from './GoogleMap';
+import GoogleMapMediator from './GoogleMapMediator';
 
 const { Header, Content } = AntLayout;
 
@@ -20,6 +21,7 @@ const Layout = styled(AntLayout)`
 export default function Page() {
     return (
         <Layout>
+            <GoogleMapMediator />
             <Header>
                 <Logo>Wikipedia Map</Logo>
             </Header>

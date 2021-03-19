@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
 import styled from 'styled-components';
-import WikipediaApi from '../services/api/WikipediaApi';
+import { EVENT_TYPE, emit } from './GoogleMapMediator';
 
 const GoogleMapContainer = styled.div`
 width:100%;
@@ -16,16 +15,9 @@ const defaultZoom = 14
 
 export default function GoogleMap() {
 
-    useEffect(() => {
-        const getData = async () => {
-            let { query: { geosearch: data } } = await WikipediaApi.getArticles({
-                coord: katowicePosition,
-                limit: 10
-            });
-            console.log({ data });
-        }
-        getData();
-    }, [])
+    const handleChangeMap = ({ center }) => {
+        emit(EVENT_TYPE.MAP_DRAGGED, center);
+    }
 
     return (
         <GoogleMapContainer>
@@ -37,6 +29,7 @@ export default function GoogleMap() {
                 defaultCenter={katowicePosition}
                 defaultZoom={defaultZoom}
                 yesIWantToUseGoogleMapApiInternals
+                onChange={handleChangeMap}
             />
         </GoogleMapContainer>
     )
