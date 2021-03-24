@@ -12,16 +12,10 @@ const initialState = {
 const actions = {
     addMarkers: (markers) => ({
         setState,
-        getState,
     }) => {
-        const state = getState();
-        const existingMarkers = state.markers.map((marker) => marker.pageid);
-        const newMarkers = markers.filter(
-            (marker) => !existingMarkers.includes(marker.pageid)
-        );
 
         setState(draft => {
-            draft.markers.push(...newMarkers);
+            draft.markers = markers;
         });
     },
     setLang: (lang) => ({
