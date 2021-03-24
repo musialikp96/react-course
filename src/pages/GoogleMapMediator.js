@@ -1,8 +1,10 @@
 import WikipediaApi from '../services/api/WikipediaApi';
 import { useMapStore } from './store';
+import { useState } from 'react';
 
 export const EVENT_TYPE = Object.freeze({
-    MAP_DRAGGED: "MAP_DRAGGED"
+    MAP_DRAGGED: "MAP_DRAGGED",
+    LANG_CHANGED: "LANG_CHANGED",
 })
 
 const list = {};
@@ -25,19 +27,29 @@ const mapWikiArticleToMarker = ({ lat, lon, pageid }) => {
 
 export const useGoogleMapMediator = () => {
 
-    const [, { addMarkers }] = useMapStore();
+    const [{ lang: storeLang }, { addMarkers, setLang }] = useMapStore();
+    const [lastCenter, setLastCenter] = useState();
 
-    const mapDragged = async (center) => {
-
+    const updateMarkers = async (center = lastCenter, lang = storeLang) => {
         let { query: { geosearch: data } } = await WikipediaApi.getArticles({
             coord: center,
-            limit: 10
-        });
-
+            limit: 100
+        }, lang);
+        setLastCenter(center);
         addMarkers(data.map(mapWikiArticleToMarker));
     }
 
+    const mapDragged = async (center) => {
+        updateMarkers(center)
+    }
+
+    const langChanged = async (lang) => {
+        setLang(lang);
+        updateMarkers(lastCenter, lang)
+    }
+
     attachListener(EVENT_TYPE.MAP_DRAGGED, mapDragged)
+    attachListener(EVENT_TYPE.LANG_CHANGED, langChanged)
 }
 
 const GoogleMapMediator = () => {

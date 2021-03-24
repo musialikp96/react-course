@@ -1,14 +1,17 @@
 import ky from 'ky';
 
+const getPrefixUrl = (lang) => {
+    return `https://${lang}.wikipedia.org/w`;
+}
+
 const client = ky.create({
-    prefixUrl: 'https://pl.wikipedia.org/w',
     headers: {
         'content-type': 'application/json'
     }
 })
 
 const api = {
-    getArticles({ coord, radius = 10000, limit = 10 } = {}) {
+    getArticles({ coord, radius = 10000, limit = 10 } = {}, lang = 'pl') {
         const params = {
             action: 'query',
             list: 'geosearch',
@@ -20,6 +23,7 @@ const api = {
         }
         return client
             .get(`api.php?`, {
+                prefixUrl: getPrefixUrl(lang),
                 searchParams: {
                     ...params,
                     gscoord: coord.lat + '|' + coord.lng,

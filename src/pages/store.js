@@ -6,6 +6,7 @@ defaults.mutator = (currentState, producer) => produce(currentState, producer);
 
 const initialState = {
     markers: [],
+    lang: 'pl'
 };
 
 const actions = {
@@ -23,6 +24,13 @@ const actions = {
             draft.markers.push(...newMarkers);
         });
     },
+    setLang: (lang) => ({
+        setState
+    }) => {
+        setState(draft => {
+            draft.lang = lang
+        });
+    }
 };
 
 const Store = createStore({
