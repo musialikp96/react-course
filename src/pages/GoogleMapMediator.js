@@ -17,11 +17,12 @@ export const attachListener = (eventType, eventAction) => {
     list[eventType] = eventAction
 }
 
-const mapWikiArticleToMarker = ({ lat, lon, pageid }) => {
+const mapWikiArticleToMarker = ({ lat, lon, pageid, title }) => {
     return {
         lat,
         lng: lon,
-        pageid
+        pageid,
+        title
     }
 }
 

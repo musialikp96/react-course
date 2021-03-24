@@ -2,7 +2,7 @@ import GoogleMapReact from 'google-map-react';
 import styled from 'styled-components';
 import { EVENT_TYPE, emit } from '../pages/GoogleMapMediator';
 import { useMapStore } from '../pages/store';
-import Marker from './Marker';
+import MarkerWithTooltip from './MarkerWithTooltip';
 
 const GoogleMapContainer = styled.div`
     width:100%;
@@ -37,7 +37,7 @@ export default function GoogleMap() {
                 onChange={handleChangeMap}
             >
                 {markers.map((marker) => (
-                    <Marker key={marker.pageid} lat={marker.lat} lng={marker.lng} />
+                    <MarkerWithTooltip title={marker.title} key={marker.pageid} lat={marker.lat} lng={marker.lng} />
                 ))}
             </GoogleMapReact>
         </GoogleMapContainer>
