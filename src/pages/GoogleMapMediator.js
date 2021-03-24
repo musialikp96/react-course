@@ -1,4 +1,5 @@
 import WikipediaApi from '../services/api/WikipediaApi';
+import { useMapStore } from './store';
 
 export const EVENT_TYPE = Object.freeze({
     MAP_DRAGGED: "MAP_DRAGGED"
@@ -14,14 +15,26 @@ export const attachListener = (eventType, eventAction) => {
     list[eventType] = eventAction
 }
 
+const mapWikiArticleToMarker = ({ lat, lon, pageid }) => {
+    return {
+        lat,
+        lng: lon,
+        pageid
+    }
+}
+
 export const useGoogleMapMediator = () => {
+
+    const [, { addMarkers }] = useMapStore();
+
     const mapDragged = async (center) => {
 
         let { query: { geosearch: data } } = await WikipediaApi.getArticles({
             coord: center,
             limit: 10
         });
-        console.log({ data });
+
+        addMarkers(data.map(mapWikiArticleToMarker));
     }
 
     attachListener(EVENT_TYPE.MAP_DRAGGED, mapDragged)
