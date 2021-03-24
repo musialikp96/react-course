@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 export const EVENT_TYPE = Object.freeze({
     MAP_DRAGGED: "MAP_DRAGGED",
+    MAP_LOADED: "MAP_LOADED",
     LANG_CHANGED: "LANG_CHANGED",
 })
 
@@ -28,7 +29,7 @@ const mapWikiArticleToMarker = ({ lat, lon, pageid, title }) => {
 
 export const useGoogleMapMediator = () => {
 
-    const [{ lang: storeLang }, { addMarkers, setLang }] = useMapStore();
+    const [{ lang: storeLang }, { addMarkers, setLang, setGoogleApiLoaded }] = useMapStore();
     const [lastCenter, setLastCenter] = useState();
 
     const updateMarkers = async (center = lastCenter, lang = storeLang) => {
@@ -44,12 +45,17 @@ export const useGoogleMapMediator = () => {
         updateMarkers(center)
     }
 
+    const mapLoaded = async () => {
+        setGoogleApiLoaded(true)
+    }
+
     const langChanged = async (lang) => {
         setLang(lang);
         updateMarkers(lastCenter, lang)
     }
 
     attachListener(EVENT_TYPE.MAP_DRAGGED, mapDragged)
+    attachListener(EVENT_TYPE.MAP_LOADED, mapLoaded)
     attachListener(EVENT_TYPE.LANG_CHANGED, langChanged)
 }
 

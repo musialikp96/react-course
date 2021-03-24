@@ -6,14 +6,14 @@ defaults.mutator = (currentState, producer) => produce(currentState, producer);
 
 const initialState = {
     markers: [],
-    lang: 'pl'
+    lang: 'pl',
+    googleApiLoaded: false
 };
 
 const actions = {
     addMarkers: (markers) => ({
         setState,
     }) => {
-
         setState(draft => {
             draft.markers = markers;
         });
@@ -24,6 +24,11 @@ const actions = {
         setState(draft => {
             draft.lang = lang
         });
+    },
+    setGoogleApiLoaded: value => ({ setState }) => {
+        setState(draft => {
+            draft.googleApiLoaded = value
+        })
     }
 };
 

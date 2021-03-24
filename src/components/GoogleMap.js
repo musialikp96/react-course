@@ -24,6 +24,11 @@ export default function GoogleMap() {
         emit(EVENT_TYPE.MAP_DRAGGED, center);
     }
 
+    const handleApiLoaded = (map, maps) => {
+        emit(EVENT_TYPE.MAP_LOADED);
+    }
+
+
     return (
         <GoogleMapContainer>
             <GoogleMapReact
@@ -34,6 +39,7 @@ export default function GoogleMap() {
                 defaultCenter={katowicePosition}
                 defaultZoom={defaultZoom}
                 yesIWantToUseGoogleMapApiInternals
+                onGoogleApiLoaded={({ maps, map }) => handleApiLoaded(map, maps)}
                 onChange={handleChangeMap}
             >
                 {markers.map((marker) => (

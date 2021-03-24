@@ -1,14 +1,10 @@
 import { Layout as AntLayout } from 'antd';
 import styled from 'styled-components';
 import GoogleMap from '../components/GoogleMap';
-import LangToggle from '../components/lang/LangToggle';
+import Header from '../components/Header';
 import GoogleMapMediator from './GoogleMapMediator';
 
-const { Header: AntHeader, Content } = AntLayout;
-
-const Logo = styled.h2`
-    color:#fff;
-`;
+const { Content } = AntLayout;
 
 const Inner = styled(Content)`
     min-height:280px;
@@ -18,20 +14,12 @@ const Inner = styled(Content)`
 const Layout = styled(AntLayout)`
     min-height:100vh;
 `;
-const Header = styled(AntHeader)`
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-`;
 
 export default function Page() {
     return (
         <Layout>
             <GoogleMapMediator />
-            <Header>
-                <Logo>Wikipedia Map</Logo>
-                <LangToggle />
-            </Header>
+            <Header />
             <Inner>
                 <GoogleMap />
             </Inner>
