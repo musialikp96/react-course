@@ -7,7 +7,9 @@ defaults.mutator = (currentState, producer) => produce(currentState, producer);
 const initialState = {
     markers: [],
     lang: 'pl',
-    googleApiLoaded: false
+    googleApiLoaded: false,
+    modalVisible: false,
+    currentArticle: {}
 };
 
 const actions = {
@@ -29,7 +31,17 @@ const actions = {
         setState(draft => {
             draft.googleApiLoaded = value
         })
-    }
+    },
+    setModalVisible: value => ({ setState }) => {
+        setState(draft => {
+            draft.modalVisible = value
+        })
+    },
+    setCurrentArticle: ({ url, title }) => ({ setState }) => {
+        setState(draft => {
+            draft.currentArticle = { url, title }
+        })
+    },
 };
 
 const Store = createStore({

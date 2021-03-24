@@ -32,6 +32,26 @@ const api = {
                 }
             })
             .json()
+    },
+
+    getArticle({ title }, lang = 'pl') {
+        const params = {
+            action: 'query',
+            format: 'json',
+            titles: title,
+            prop: 'info',
+            inprop: 'url',
+            origin: '*',
+        }
+
+        return client
+            .get(`api.php?`, {
+                prefixUrl: getPrefixUrl(lang),
+                searchParams: {
+                    ...params,
+                }
+            })
+            .json()
     }
 }
 

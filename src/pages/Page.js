@@ -1,5 +1,6 @@
 import { Layout as AntLayout } from 'antd';
 import styled from 'styled-components';
+import ArticleModal from '../components/ArticleModal';
 import GoogleMap from '../components/GoogleMap';
 import Header from '../components/Header';
 import GoogleMapMediator from './GoogleMapMediator';
@@ -21,6 +22,7 @@ export default function Page() {
             <GoogleMapMediator />
             <Header />
             <Inner>
+                <ArticleModal />
                 <GoogleMap />
             </Inner>
         </Layout>

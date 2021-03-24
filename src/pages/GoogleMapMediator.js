@@ -7,6 +7,7 @@ export const EVENT_TYPE = Object.freeze({
     MAP_LOADED: "MAP_LOADED",
     PLACES_SEARCHED: "PLACES_SEARCHED",
     LANG_CHANGED: "LANG_CHANGED",
+    MARKER_CLICKED: "MARKER_CLICKED",
 })
 
 const list = {};
@@ -31,7 +32,7 @@ const mapWikiArticleToMarker = ({ lat, lon, pageid, title }) => {
 
 export const useGoogleMapMediator = () => {
 
-    const [{ lang: storeLang }, { addMarkers, setLang, setGoogleApiLoaded }] = useMapStore();
+    const [{ lang: storeLang }, { addMarkers, setLang, setGoogleApiLoaded, setModalVisible, setCurrentArticle }] = useMapStore();
     const [lastCenter, setLastCenter] = useState();
 
     const updateMarkers = async (center = lastCenter, lang = storeLang) => {
@@ -61,10 +62,19 @@ export const useGoogleMapMediator = () => {
         map.setCenter(location);
     }
 
+
+    const markerClicked = async (title) => {
+        const { query: { pages } } = await WikipediaApi.getArticle({ title }, storeLang);
+        const page = Object.values(pages)[0];
+        setCurrentArticle({ url: page.fullurl, title });
+        setModalVisible(true);
+    }
+
     attachListener(EVENT_TYPE.MAP_CENTER_CHANGED, mapCenterChanged)
     attachListener(EVENT_TYPE.MAP_LOADED, mapLoaded)
     attachListener(EVENT_TYPE.LANG_CHANGED, langChanged)
     attachListener(EVENT_TYPE.PLACES_SEARCHED, placesSearched)
+    attachListener(EVENT_TYPE.MARKER_CLICKED, markerClicked)
 }
 
 const GoogleMapMediator = () => {
