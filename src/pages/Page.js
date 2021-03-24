@@ -1,6 +1,6 @@
 import { Layout as AntLayout } from 'antd';
 import styled from 'styled-components';
-import GoogleMap from './GoogleMap';
+import GoogleMap from '../components/GoogleMap';
 import GoogleMapMediator from './GoogleMapMediator';
 
 const { Header, Content } = AntLayout;

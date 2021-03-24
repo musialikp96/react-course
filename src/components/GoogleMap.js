@@ -1,6 +1,6 @@
 import GoogleMapReact from 'google-map-react';
 import styled from 'styled-components';
-import { EVENT_TYPE, emit } from './GoogleMapMediator';
+import { EVENT_TYPE, emit } from '../pages/GoogleMapMediator';
 
 const GoogleMapContainer = styled.div`
 width:100%;
