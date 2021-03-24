@@ -3,7 +3,7 @@ import { useMapStore } from './store';
 import { useState } from 'react';
 
 export const EVENT_TYPE = Object.freeze({
-    MAP_DRAGGED: "MAP_DRAGGED",
+    MAP_CENTER_CHANGED: "MAP_CENTER_CHANGED",
     MAP_LOADED: "MAP_LOADED",
     PLACES_SEARCHED: "PLACES_SEARCHED",
     LANG_CHANGED: "LANG_CHANGED",
@@ -43,7 +43,7 @@ export const useGoogleMapMediator = () => {
         addMarkers(data.map(mapWikiArticleToMarker));
     }
 
-    const mapDragged = async (center) => {
+    const mapCenterChanged = async (center) => {
         updateMarkers(center)
     }
 
@@ -61,7 +61,7 @@ export const useGoogleMapMediator = () => {
         map.setCenter(location);
     }
 
-    attachListener(EVENT_TYPE.MAP_DRAGGED, mapDragged)
+    attachListener(EVENT_TYPE.MAP_CENTER_CHANGED, mapCenterChanged)
     attachListener(EVENT_TYPE.MAP_LOADED, mapLoaded)
     attachListener(EVENT_TYPE.LANG_CHANGED, langChanged)
     attachListener(EVENT_TYPE.PLACES_SEARCHED, placesSearched)

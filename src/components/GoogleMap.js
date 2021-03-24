@@ -21,7 +21,7 @@ export default function GoogleMap() {
     const [{ markers }] = useMapStore();
 
     const handleChangeMap = ({ center }) => {
-        emit(EVENT_TYPE.MAP_DRAGGED, center);
+        emit(EVENT_TYPE.MAP_CENTER_CHANGED, center);
     }
 
     const handleApiLoaded = (map, maps) => {
