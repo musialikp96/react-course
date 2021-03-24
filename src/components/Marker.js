@@ -7,6 +7,11 @@ const Marker = styled.div`
   height: 30px;
   box-shadow: 0px 0px 5px #ffa769;
   opacity: 0.7;
+  transition:all .2s ease;
+  &:hover {
+    opacity:1;
+    transform:scale(1.05)
+  }
 `;
 
 export default Marker;
