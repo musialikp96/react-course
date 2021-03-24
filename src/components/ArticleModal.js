@@ -24,6 +24,7 @@ export default function ArticleModal() {
             <iframe
                 src={url?.replace('wikipedia.org', 'm.wikipedia.org')}
                 style={{ width: '100%', height: '100%', border: 'none' }}
+                title={title}
             />
         </Modal>
     )
