@@ -3,6 +3,7 @@ import { Layout as AntLayout, Input } from 'antd';
 import styled from 'styled-components';
 import LangToggle from './lang/LangToggle';
 import { useMapStore } from '../pages/store';
+import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
 
 const { Header: AntHeader } = AntLayout;
 
@@ -16,7 +17,10 @@ const StyledHeader = styled(AntHeader)`
     align-items:center;
 `;
 
-const SearchBox = styled(Input)`
+const SearchBox = styled(Input).attrs({
+    type: 'text',
+    placeholder: 'Type location...'
+})`
     margin: 10px 20px;
     max-width:300px;
 `;
@@ -32,15 +36,20 @@ export default function Header() {
 
     useEffect(() => {
         if (googleApiLoaded) {
-            const input = document.getElementById("pac-input");
-            const autocomplete = new window.google.maps.places.Autocomplete(input);
+            const input = document.getElementById("searchbox");
+            const searchbox = new window.google.maps.places.SearchBox(input);
+            searchbox.addListener('places_changed', () => {
+                const selectedPlace = searchbox.getPlaces()[0];
+                const { location } = selectedPlace.geometry;
+                emit(EVENT_TYPE.PLACES_SEARCHED, location.toJSON())
+            })
         }
     }, [googleApiLoaded])
 
     return (
         <StyledHeader>
             <Logo>Wikipedia Map</Logo>
-            <SearchBox placeholder="Basic usage" />
+            <SearchBox id="searchbox" />
             <RightAside>
                 <LangToggle />
             </RightAside>

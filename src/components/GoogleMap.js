@@ -25,7 +25,7 @@ export default function GoogleMap() {
     }
 
     const handleApiLoaded = (map, maps) => {
-        emit(EVENT_TYPE.MAP_LOADED);
+        emit(EVENT_TYPE.MAP_LOADED, map);
     }
 
 
