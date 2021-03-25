@@ -1,31 +1,32 @@
 const articlesKey = 'articles';
 
 const ArticleDatabase = () => {
+    let articles = getArticles();
 
-    const getArticles = () => {
+    function getArticles() {
         try {
             const articles = localStorage.getItem(articlesKey);
             if (articles) {
-                return JSON.parse(articlesKey);
+                return JSON.parse(articles);
             } else {
                 return [];
             }
         } catch (error) {
             console.error(error);
+            return [];
         }
     }
 
-    const addArticle = title => {
+    function addArticle(title) {
         try {
             articles.push(title);
-            localStorage.setItem(articlesKey, articles);
+            localStorage.setItem(articlesKey, JSON.stringify(articles));
         } catch (error) {
             console.error(error);
         }
     }
 
 
-    let articles = getArticles();
 
     const api = {
         refresh() {
