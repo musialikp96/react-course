@@ -9,7 +9,7 @@ const MarkerWithTooltip = ({ title, ...rest }) => {
 
     return (
         <Tooltip title={title}>
-            <Marker {...rest} onClick={handleClick} />
+            <Marker {...rest} onClick={handleClick} color="orange" />
         </Tooltip>
     )
 }
