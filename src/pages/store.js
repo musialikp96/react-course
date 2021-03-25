@@ -42,6 +42,14 @@ const actions = {
             draft.currentArticle = { url, title }
         })
     },
+    setMarkerColor: (color, title) => ({ setState, getState }) => {
+        const { markers } = getState();
+        const markerIndex = markers.findIndex(marker => marker.title === title);
+
+        setState(draft => {
+            draft.markers[markerIndex].color = color
+        })
+    },
 };
 
 const Store = createStore({

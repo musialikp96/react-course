@@ -1,6 +1,7 @@
 import WikipediaApi from '../services/api/WikipediaApi';
 import { useMapStore } from './store';
 import { useState } from 'react';
+import ArticleDatabase from '../services/ArticlesDatabase';
 
 export const EVENT_TYPE = Object.freeze({
     MAP_CENTER_CHANGED: "MAP_CENTER_CHANGED",
@@ -12,6 +13,8 @@ export const EVENT_TYPE = Object.freeze({
 
 const list = {};
 let map = null;
+const defaultArticleColor = 'orange';
+const readArticleColor = 'blue';
 
 export const emit = (eventType, ...args) => {
     list[eventType] && list[eventType](...args)
@@ -29,10 +32,19 @@ const mapWikiArticleToMarker = ({ lat, lon, pageid, title }) => {
         title
     }
 }
+const mapReadArticle = ({ title, ...rest }) => {
+    return {
+        ...rest,
+        title,
+        color: ArticleDatabase.isArticleRead(title)
+            ? readArticleColor
+            : defaultArticleColor
+    }
+}
 
 export const useGoogleMapMediator = () => {
 
-    const [{ lang: storeLang }, { addMarkers, setLang, setGoogleApiLoaded, setModalVisible, setCurrentArticle }] = useMapStore();
+    const [{ lang: storeLang }, { addMarkers, setLang, setGoogleApiLoaded, setModalVisible, setCurrentArticle, setMarkerColor }] = useMapStore();
     const [lastCenter, setLastCenter] = useState();
 
     const updateMarkers = async (center = lastCenter, lang = storeLang) => {
@@ -41,7 +53,12 @@ export const useGoogleMapMediator = () => {
             limit: 100
         }, lang);
         setLastCenter(center);
-        addMarkers(data.map(mapWikiArticleToMarker));
+
+        let articles = data
+            .map(mapWikiArticleToMarker)
+            .map(mapReadArticle)
+
+        addMarkers(articles);
     }
 
     const mapCenterChanged = async (center) => {
@@ -68,6 +85,8 @@ export const useGoogleMapMediator = () => {
         const page = Object.values(pages)[0];
         setCurrentArticle({ url: page.fullurl, title });
         setModalVisible(true);
+        setMarkerColor(readArticleColor, title)
+        ArticleDatabase.setArticleAsRead(title);
     }
 
     attachListener(EVENT_TYPE.MAP_CENTER_CHANGED, mapCenterChanged)
