@@ -18,7 +18,7 @@ const defaultZoom = 14
 
 export default function GoogleMap() {
 
-    const [{ markers }] = useMapStore();
+    const [{ markers, mapStyle }] = useMapStore();
 
     const handleChangeMap = ({ center }) => {
         emit(EVENT_TYPE.MAP_CENTER_CHANGED, center);
@@ -41,6 +41,9 @@ export default function GoogleMap() {
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={({ maps, map }) => handleApiLoaded(map, maps)}
                 onChange={handleChangeMap}
+                options={{
+                    styles: mapStyle
+                }}
             >
                 {markers.map((marker) => (
                     <MarkerWithTooltip

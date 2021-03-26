@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Layout as AntLayout, Input } from 'antd';
 import styled from 'styled-components';
 import LangToggle from './lang/LangToggle';
+import { StylePickerToggle } from './StylePicker';
 import { useMapStore } from '../pages/store';
 import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
 
@@ -52,6 +53,7 @@ export default function Header() {
             <SearchBox id="searchbox" />
             <RightAside>
                 <LangToggle />
+                <StylePickerToggle />
             </RightAside>
         </StyledHeader>
     )

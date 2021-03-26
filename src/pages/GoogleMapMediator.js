@@ -11,6 +11,8 @@ export const EVENT_TYPE = Object.freeze({
     PLACES_SEARCHED: "PLACES_SEARCHED",
     LANG_CHANGED: "LANG_CHANGED",
     MARKER_CLICKED: "MARKER_CLICKED",
+    STYLE_TOGGLE_CLICKED: "STYLE_TOGGLE_CLICKED",
+    STYLE_CLICKED: "STYLE_CLICKED",
 })
 
 const list = {};
@@ -53,8 +55,11 @@ export const useGoogleMapMediator = () => {
         setGoogleApiLoaded,
         setModalVisible,
         setCurrentArticle,
-        setMarkerColor
+        setMarkerColor,
+        setMapStyle,
+        setStyleModalVisible
     }] = useMapStore();
+
     const [lastCenter, setLastCenter] = useState();
 
     const updateMarkers = async (center = lastCenter, lang = storeLang) => {
@@ -111,7 +116,8 @@ export const useGoogleMapMediator = () => {
     attachListener(EVENT_TYPE.LANG_CHANGED, langChanged)
     attachListener(EVENT_TYPE.PLACES_SEARCHED, placesSearched)
     attachListener(EVENT_TYPE.MARKER_CLICKED, markerClicked)
-    attachListener(EVENT_TYPE.MARKER_CLICKED, markerClicked)
+    attachListener(EVENT_TYPE.STYLE_TOGGLE_CLICKED, () => setStyleModalVisible(true))
+    attachListener(EVENT_TYPE.STYLE_CLICKED, setMapStyle)
 }
 
 const GoogleMapMediator = () => {

@@ -9,8 +9,10 @@ const initialState = {
     lang: 'pl',
     googleApiLoaded: false,
     modalVisible: false,
+    styleModalVisible: false,
     currentArticle: {},
-    styles: []
+    styles: [],
+    mapStyle: ''
 };
 
 const actions = {
@@ -38,6 +40,11 @@ const actions = {
             draft.modalVisible = value
         })
     },
+    setStyleModalVisible: value => ({ setState }) => {
+        setState(draft => {
+            draft.styleModalVisible = value
+        })
+    },
     setCurrentArticle: ({ url, title }) => ({ setState }) => {
         setState(draft => {
             draft.currentArticle = { url, title }
@@ -54,6 +61,11 @@ const actions = {
     addStyles: styles => ({ setState }) => {
         setState(draft => {
             draft.styles = styles
+        })
+    },
+    setMapStyle: style => ({ setState }) => {
+        setState(draft => {
+            draft.mapStyle = style
         })
     }
 };
