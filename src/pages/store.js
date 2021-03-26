@@ -9,7 +9,8 @@ const initialState = {
     lang: 'pl',
     googleApiLoaded: false,
     modalVisible: false,
-    currentArticle: {}
+    currentArticle: {},
+    styles: []
 };
 
 const actions = {
@@ -50,6 +51,11 @@ const actions = {
             draft.markers[markerIndex].color = color
         })
     },
+    addStyles: styles => ({ setState }) => {
+        setState(draft => {
+            draft.styles = styles
+        })
+    }
 };
 
 const Store = createStore({

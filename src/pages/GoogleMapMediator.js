@@ -1,4 +1,5 @@
 import WikipediaApi from '../services/api/WikipediaApi';
+import SnazzyApi from '../services/api/SnazzyApi';
 import { useMapStore } from './store';
 import { useState } from 'react';
 import ArticleDatabase from '../services/ArticlesDatabase';
@@ -45,7 +46,15 @@ const mapReadArticle = ({ title, ...rest }) => {
 
 export const useGoogleMapMediator = () => {
 
-    const [{ lang: storeLang }, { addMarkers, setLang, setGoogleApiLoaded, setModalVisible, setCurrentArticle, setMarkerColor }] = useMapStore();
+    const [{ lang: storeLang }, {
+        addMarkers,
+        addStyles,
+        setLang,
+        setGoogleApiLoaded,
+        setModalVisible,
+        setCurrentArticle,
+        setMarkerColor
+    }] = useMapStore();
     const [lastCenter, setLastCenter] = useState();
 
     const updateMarkers = async (center = lastCenter, lang = storeLang) => {
@@ -70,7 +79,8 @@ export const useGoogleMapMediator = () => {
 
     const mapLoaded = async (mapInstance) => {
         map = mapInstance;
-        setGoogleApiLoaded(true)
+        setGoogleApiLoaded(true);
+        updateStyles();
     }
 
     const langChanged = async (lang) => {
@@ -82,7 +92,6 @@ export const useGoogleMapMediator = () => {
         map.setCenter(location);
     }
 
-
     const markerClicked = async (title) => {
         const { query: { pages } } = await WikipediaApi.getArticle({ title }, storeLang);
         const page = Object.values(pages)[0];
@@ -92,10 +101,16 @@ export const useGoogleMapMediator = () => {
         ArticleDatabase.setArticleAsRead(title);
     }
 
+    const updateStyles = async () => {
+        let { styles } = await SnazzyApi.getStyles(1);
+        addStyles(styles);
+    }
+
     attachListener(EVENT_TYPE.MAP_CENTER_CHANGED, mapCenterChanged)
     attachListener(EVENT_TYPE.MAP_LOADED, mapLoaded)
     attachListener(EVENT_TYPE.LANG_CHANGED, langChanged)
     attachListener(EVENT_TYPE.PLACES_SEARCHED, placesSearched)
+    attachListener(EVENT_TYPE.MARKER_CLICKED, markerClicked)
     attachListener(EVENT_TYPE.MARKER_CLICKED, markerClicked)
 }
 
