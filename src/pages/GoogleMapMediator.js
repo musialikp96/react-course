@@ -2,6 +2,7 @@ import WikipediaApi from '../services/api/WikipediaApi';
 import { useMapStore } from './store';
 import { useState } from 'react';
 import ArticleDatabase from '../services/ArticlesDatabase';
+import debounce from 'lodash/debounce';
 
 export const EVENT_TYPE = Object.freeze({
     MAP_CENTER_CHANGED: "MAP_CENTER_CHANGED",
@@ -50,7 +51,7 @@ export const useGoogleMapMediator = () => {
     const updateMarkers = async (center = lastCenter, lang = storeLang) => {
         let { query: { geosearch: data } } = await WikipediaApi.getArticles({
             coord: center,
-            limit: 100
+            limit: 50
         }, lang);
         setLastCenter(center);
 
@@ -61,8 +62,10 @@ export const useGoogleMapMediator = () => {
         addMarkers(articles);
     }
 
+    const debouncedUpdateMarkes = debounce(updateMarkers, 250);
+
     const mapCenterChanged = async (center) => {
-        updateMarkers(center)
+        debouncedUpdateMarkes(center)
     }
 
     const mapLoaded = async (mapInstance) => {
@@ -72,7 +75,7 @@ export const useGoogleMapMediator = () => {
 
     const langChanged = async (lang) => {
         setLang(lang);
-        updateMarkers(lastCenter, lang)
+        debouncedUpdateMarkes(lastCenter, lang)
     }
 
     const placesSearched = async (location) => {

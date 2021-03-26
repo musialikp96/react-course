@@ -43,7 +43,13 @@ export default function GoogleMap() {
                 onChange={handleChangeMap}
             >
                 {markers.map((marker) => (
-                    <MarkerWithTooltip title={marker.title} key={marker.pageid} lat={marker.lat} lng={marker.lng} />
+                    <MarkerWithTooltip
+                        color={marker.color}
+                        title={marker.title}
+                        key={marker.pageid}
+                        lat={marker.lat}
+                        lng={marker.lng}
+                    />
                 ))}
             </GoogleMapReact>
         </GoogleMapContainer>
