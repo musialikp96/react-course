@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ArticleModal from '../components/ArticleModal';
 import GoogleMap from '../components/GoogleMap';
 import Header from '../components/Header';
+import StylePicker from '../components/StylePicker';
 import GoogleMapMediator from './GoogleMapMediator';
 
 const { Content } = AntLayout;
@@ -24,6 +25,7 @@ export default function Page() {
             <Inner>
                 <ArticleModal />
                 <GoogleMap />
+                <StylePicker />
             </Inner>
         </Layout>
     )

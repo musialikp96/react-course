@@ -10,7 +10,7 @@ export default function StylePicker() {
 
     const getStyles = async page => {
         let res = await SnazzyApi.getStyles(page);
-        // console.log({ res });
+        console.log({ res });
     }
 
     return (
