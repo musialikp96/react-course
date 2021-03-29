@@ -3,6 +3,7 @@ import { Row, Col, Modal, Button } from 'antd';
 import StylePreview from './StylePreview';
 import { EVENT_TYPE, emit } from '../pages/GoogleMapMediator';
 import Select from './Select';
+import { BgColorsOutlined } from '@ant-design/icons';
 
 const filters = {
     tag: [
@@ -37,8 +38,8 @@ export const StylePickerToggle = () => {
     }
 
     return (
-        <Button type="primary" shape="circle" onClick={showStyleModal}>
-            style
+        <Button type="primary" onClick={showStyleModal}>
+            <BgColorsOutlined />
         </Button>
     )
 }

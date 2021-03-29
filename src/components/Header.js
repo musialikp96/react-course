@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Layout as AntLayout, Input } from 'antd';
+import { Layout as AntLayout, Input, Space } from 'antd';
 import styled from 'styled-components';
 import LangToggle from './lang/LangToggle';
 import { StylePickerToggle } from './StylePicker';
@@ -26,7 +26,7 @@ const SearchBox = styled(Input).attrs({
     max-width:300px;
 `;
 
-const RightAside = styled.div`
+const RightAside = styled(Space)`
     margin-left:auto;
     padding:10px;
 `;

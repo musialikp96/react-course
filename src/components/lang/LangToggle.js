@@ -11,8 +11,8 @@ export default function LangToggle() {
     }
 
     return (
-        <Button type="primary" shape="circle" onClick={() => setLang(inactiveLang)}>
-            {lang}
+        <Button type="primary" onClick={() => setLang(inactiveLang)}>
+            {lang.toUpperCase()}
         </Button>
     )
 }
