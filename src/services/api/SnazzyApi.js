@@ -7,9 +7,11 @@ const client = ky.create({
 })
 
 const api = {
-    getStyles(page) {
+    getStyles(page, stylesFilters = {}) {
+
+        let queryString = '&' + Object.keys(stylesFilters).map(key => key + '=' + stylesFilters[key]).join('&');
         return client
-            .get(`explore.json?key=${process.env.REACT_APP_SNAZZY_API_KEY}`, {})
+            .get(`explore.json?key=${process.env.REACT_APP_SNAZZY_API_KEY}${queryString}`, {})
             .json()
     },
 }

@@ -13,6 +13,7 @@ export const EVENT_TYPE = Object.freeze({
     MARKER_CLICKED: "MARKER_CLICKED",
     STYLE_TOGGLE_CLICKED: "STYLE_TOGGLE_CLICKED",
     STYLE_CLICKED: "STYLE_CLICKED",
+    STYLE_FILTER_CHANGED: "STYLE_FILTER_CHANGED",
 })
 
 const list = {};
@@ -48,7 +49,10 @@ const mapReadArticle = ({ title, ...rest }) => {
 
 export const useGoogleMapMediator = () => {
 
-    const [{ lang: storeLang }, {
+    const [{
+        lang: storeLang,
+        stylesFilters
+    }, {
         addMarkers,
         addStyles,
         setLang,
@@ -57,7 +61,8 @@ export const useGoogleMapMediator = () => {
         setCurrentArticle,
         setMarkerColor,
         setMapStyle,
-        setStyleModalVisible
+        setStyleModalVisible,
+        setStyleFilters
     }] = useMapStore();
 
     const [lastCenter, setLastCenter] = useState();
@@ -106,9 +111,17 @@ export const useGoogleMapMediator = () => {
         ArticleDatabase.setArticleAsRead(title);
     }
 
-    const updateStyles = async () => {
-        let { styles } = await SnazzyApi.getStyles(1);
+    const updateStyles = async (stylesFilters = {}) => {
+        let { styles } = await SnazzyApi.getStyles(1, stylesFilters);
         addStyles(styles);
+    }
+
+    const filterChanged = async (filterName, filterValue) => {
+        setStyleFilters(filterName, filterValue);
+        updateStyles({
+            ...stylesFilters,
+            [filterName]: filterValue
+        });
     }
 
     attachListener(EVENT_TYPE.MAP_CENTER_CHANGED, mapCenterChanged)
@@ -118,6 +131,7 @@ export const useGoogleMapMediator = () => {
     attachListener(EVENT_TYPE.MARKER_CLICKED, markerClicked)
     attachListener(EVENT_TYPE.STYLE_TOGGLE_CLICKED, () => setStyleModalVisible(true))
     attachListener(EVENT_TYPE.STYLE_CLICKED, setMapStyle)
+    attachListener(EVENT_TYPE.STYLE_FILTER_CHANGED, filterChanged)
 }
 
 const GoogleMapMediator = () => {

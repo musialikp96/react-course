@@ -12,7 +12,8 @@ const initialState = {
     styleModalVisible: false,
     currentArticle: {},
     styles: [],
-    mapStyle: ''
+    mapStyle: '',
+    stylesFilters: {}
 };
 
 const actions = {
@@ -66,6 +67,17 @@ const actions = {
     setMapStyle: style => ({ setState }) => {
         setState(draft => {
             draft.mapStyle = style
+        })
+    },
+    setStyleFilters: (filterName, filterValue) => ({ setState }) => {
+        setState(draft => {
+            let filters = draft.stylesFilters;
+            filters = {
+                ...filters,
+                [filterName]: filterValue
+            }
+
+            draft.stylesFilters = filters
         })
     }
 };

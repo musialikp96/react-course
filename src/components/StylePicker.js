@@ -2,7 +2,33 @@ import { useMapStore } from '../pages/store';
 import { Row, Col, Modal, Button } from 'antd';
 import StylePreview from './StylePreview';
 import { EVENT_TYPE, emit } from '../pages/GoogleMapMediator';
+import Select from './Select';
 
+const filters = {
+    tag: [
+        'colorful',
+        'complex',
+        'dark',
+        'greyscal',
+        'light',
+        'monochro',
+        'no-label',
+        'simple',
+        'two-tone',
+    ],
+    color: [
+        'black',
+        'blue',
+        'gray',
+        'green',
+        'multi',
+        'orange',
+        'purple',
+        'red',
+        'white',
+        'yellow',
+    ]
+}
 
 export const StylePickerToggle = () => {
 
@@ -29,6 +55,10 @@ export default function StylePicker() {
         emit(EVENT_TYPE.STYLE_CLICKED, style)
     }
 
+    const onFilterChanged = (filterName, filterValue) => {
+        emit(EVENT_TYPE.STYLE_FILTER_CHANGED, filterName, filterValue);
+    }
+
     return (
         <Modal
             title={'Choose style for map'}
@@ -40,7 +70,18 @@ export default function StylePicker() {
                 height: '80vh'
             }}
         >
-            <Row>
+            <Select
+                options={filters.tag}
+                placeholder={'Tag'}
+                onChange={(value) => onFilterChanged('tag', value)}
+            />
+            <Select
+                options={filters.color}
+                placeholder={'Color'}
+                onChange={(value) => onFilterChanged('color', value)}
+            />
+
+            <Row style={{ marginTop: 20 }}>
                 {
                     styles.map(({ imageUrl, id, json }) => (
 
