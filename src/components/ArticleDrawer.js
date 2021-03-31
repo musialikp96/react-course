@@ -3,6 +3,7 @@ import { useMapStore } from '../pages/store';
 import { List, Drawer, Button } from 'antd';
 import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
 import { UnorderedListOutlined } from '@ant-design/icons';
+import { ARTICLE_STATE } from '../services/ArticlesDatabase';
 
 
 
@@ -28,7 +29,7 @@ export default function ArticleDrawer() {
     };
 
     const filterMarkersToVisitedArticles = (markers) => {
-        return markers.filter(({ color }) => color !== 'orange');
+        return markers.filter(({ state }) => state !== ARTICLE_STATE.DEFAULT);
     }
 
     const handleItemClick = (item) => {

@@ -1,11 +1,14 @@
+import { useEffect, useState } from 'react';
 import { Button, Modal } from 'antd';
 import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
 import { useMapStore } from '../pages/store';
+import ArticlesDatabase, { ARTICLE_STATE } from '../services/ArticlesDatabase';
 
 export default function ArticleModal() {
 
-    const [{ modalVisible, currentArticle }, { setModalVisible }] = useMapStore();
+    const [{ modalVisible, currentArticle, markers }, { setModalVisible }] = useMapStore();
     const { title, url } = currentArticle;
+    const [isVisited, setIsVisited] = useState(false);
 
     const handleCancel = () => {
         setModalVisible(false);
@@ -13,7 +16,12 @@ export default function ArticleModal() {
 
     const handleVisitedClick = () => {
         emit(EVENT_TYPE.MARKER_VISITED, title);
+        setIsVisited(true);
     }
+
+    useEffect(() => {
+        setIsVisited(markers.find(({ title: t }) => t === title)?.state === ARTICLE_STATE.VISITED)
+    }, [modalVisible])
 
     return (
         <Modal
@@ -26,7 +34,7 @@ export default function ArticleModal() {
                 height: '80vh'
             }}
         >
-            <Button onClick={handleVisitedClick}>
+            <Button onClick={handleVisitedClick} type={isVisited ? 'primary' : ''}>
                 Mark as Visited
             </Button>
             <iframe

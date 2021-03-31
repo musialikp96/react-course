@@ -108,8 +108,10 @@ export const useGoogleMapMediator = () => {
         setCurrentArticle({ url: page.fullurl, title });
         setModalVisible(true);
 
-        setMarkerState(ARTICLE_STATE.READ, title)
-        ArticleDatabase.setArticleState(title, ARTICLE_STATE.READ);
+        if (ArticleDatabase.getArticleState(title) !== ARTICLE_STATE.VISITED) {
+            setMarkerState(ARTICLE_STATE.READ, title)
+            ArticleDatabase.setArticleState(title, ARTICLE_STATE.READ);
+        }
     }
 
     const markerVisited = (title) => {
