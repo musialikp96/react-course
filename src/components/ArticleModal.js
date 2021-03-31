@@ -1,4 +1,5 @@
-import { Modal } from 'antd';
+import { Button, Modal } from 'antd';
+import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
 import { useMapStore } from '../pages/store';
 
 export default function ArticleModal() {
@@ -9,6 +10,10 @@ export default function ArticleModal() {
     const handleCancel = () => {
         setModalVisible(false);
     };
+
+    const handleVisitedClick = () => {
+        emit(EVENT_TYPE.MARKER_VISITED, title);
+    }
 
     return (
         <Modal
@@ -21,6 +26,9 @@ export default function ArticleModal() {
                 height: '80vh'
             }}
         >
+            <Button onClick={handleVisitedClick}>
+                Mark as Visited
+            </Button>
             <iframe
                 src={url?.replace('wikipedia.org', 'm.wikipedia.org')}
                 style={{ width: '100%', height: '100%', border: 'none' }}

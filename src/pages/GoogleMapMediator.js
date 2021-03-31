@@ -2,7 +2,7 @@ import WikipediaApi from '../services/api/WikipediaApi';
 import SnazzyApi from '../services/api/SnazzyApi';
 import { useMapStore } from './store';
 import { useState } from 'react';
-import ArticleDatabase from '../services/ArticlesDatabase';
+import ArticleDatabase, { ARTICLE_STATE } from '../services/ArticlesDatabase';
 import debounce from 'lodash/debounce';
 
 export const EVENT_TYPE = Object.freeze({
@@ -16,12 +16,11 @@ export const EVENT_TYPE = Object.freeze({
     STYLE_FILTER_CHANGED: "STYLE_FILTER_CHANGED",
     DRAWER_TOGGLE_CLICKED: "DRAWER_TOGGLE_CLICKED",
     DRAWER_ARTICLE_CLICKED: "DRAWER_ARTICLE_CLICKED",
+    MARKER_VISITED: "MARKER_VISITED",
 })
 
 const list = {};
 let map = null;
-const defaultArticleColor = 'orange';
-const readArticleColor = 'blue';
 
 export const emit = (eventType, ...args) => {
     list[eventType] && list[eventType](...args)
@@ -43,9 +42,7 @@ const mapReadArticle = ({ title, ...rest }) => {
     return {
         ...rest,
         title,
-        color: ArticleDatabase.isArticleRead(title)
-            ? readArticleColor
-            : defaultArticleColor
+        state: ArticleDatabase.getArticleState(title)
     }
 }
 
@@ -61,7 +58,7 @@ export const useGoogleMapMediator = () => {
         setGoogleApiLoaded,
         setModalVisible,
         setCurrentArticle,
-        setMarkerColor,
+        setMarkerState,
         setMapStyle,
         setStyleModalVisible,
         setStyleFilters,
@@ -110,8 +107,14 @@ export const useGoogleMapMediator = () => {
         const page = Object.values(pages)[0];
         setCurrentArticle({ url: page.fullurl, title });
         setModalVisible(true);
-        setMarkerColor(readArticleColor, title)
-        ArticleDatabase.setArticleAsRead(title);
+
+        setMarkerState(ARTICLE_STATE.READ, title)
+        ArticleDatabase.setArticleState(title, ARTICLE_STATE.READ);
+    }
+
+    const markerVisited = (title) => {
+        setMarkerState(ARTICLE_STATE.VISITED, title)
+        ArticleDatabase.setArticleState(title, ARTICLE_STATE.VISITED);
     }
 
     const updateStyles = async (stylesFilters = {}) => {
@@ -137,6 +140,7 @@ export const useGoogleMapMediator = () => {
     attachListener(EVENT_TYPE.LANG_CHANGED, langChanged)
     attachListener(EVENT_TYPE.PLACES_SEARCHED, placesSearched)
     attachListener(EVENT_TYPE.MARKER_CLICKED, markerClicked)
+    attachListener(EVENT_TYPE.MARKER_VISITED, markerVisited)
     attachListener(EVENT_TYPE.STYLE_TOGGLE_CLICKED, () => setStyleModalVisible(true))
     attachListener(EVENT_TYPE.STYLE_CLICKED, setMapStyle)
     attachListener(EVENT_TYPE.STYLE_FILTER_CHANGED, filterChanged)

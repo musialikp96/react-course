@@ -1,5 +1,11 @@
 const articlesKey = 'articles';
 
+export const ARTICLE_STATE = Object.freeze({
+    DEFAULT: "DEFAULT",
+    READ: "READ",
+    VISITED: "VISITED",
+})
+
 const ArticleDatabase = () => {
     let articles = getArticles();
 
@@ -17,26 +23,35 @@ const ArticleDatabase = () => {
         }
     }
 
-    function addArticle(title) {
+    function addArticle(title, state = ARTICLE_STATE.READ) {
         try {
-            articles.push(title);
+            if (!articles.find(article => article.title === title)) {
+                articles.push({ title, state });
+            } else {
+                let itemIndex = articles.findIndex(article => article.title === title);
+                articles[itemIndex].state = state;
+            }
             localStorage.setItem(articlesKey, JSON.stringify(articles));
         } catch (error) {
             console.error(error);
         }
     }
 
-
-
     const api = {
         refresh() {
             articles = getArticles()
         },
         isArticleRead(title) {
-            return articles.includes(title)
+            return articles.find(article => title === article.title)?.state === ARTICLE_STATE.READ;
         },
-        setArticleAsRead(title) {
-            addArticle(title)
+        getArticleState(title) {
+            if (!articles.find(article => title === article.title)) {
+                return ARTICLE_STATE.DEFAULT;
+            }
+            return articles.find(article => title === article.title).state;
+        },
+        setArticleState(title, state) {
+            addArticle(title, state)
         }
     }
 

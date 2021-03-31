@@ -1,22 +1,26 @@
 import styled from 'styled-components';
 
 const colors = {
-  orange: {
+  DEFAULT: {
     background: '#ff7e23e0',
     shadow: '#ffa769',
   },
-  blue: {
+  READ: {
     background: '#237bffe0',
     shadow: '#698bff',
+  },
+  VISITED: {
+    background: '#aaa',
+    shadow: '#222',
   }
 }
 
 const Marker = styled.div`
-  background-color: ${({ color }) => colors[color].background};
+  background-color: ${({ state }) => colors[state].background};
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  box-shadow: 0px 0px 5px ${({ color }) => colors[color].shadow};
+  box-shadow: 0px 0px 5px ${({ state }) => colors[state].shadow};
   opacity: 0.7;
   transition:all .2s ease;
   &:hover {

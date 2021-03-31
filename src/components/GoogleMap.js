@@ -47,7 +47,7 @@ export default function GoogleMap() {
             >
                 {markers.map((marker) => (
                     <MarkerWithTooltip
-                        color={marker.color}
+                        state={marker.state}
                         title={marker.title}
                         key={marker.pageid}
                         lat={marker.lat}
