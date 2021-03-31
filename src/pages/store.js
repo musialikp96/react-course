@@ -28,7 +28,8 @@ const initialState = {
             background: '#aaa',
             shadow: '#222',
         }
-    }
+    },
+    colorDrawerVisible: false
 };
 
 const actions = {
@@ -54,6 +55,11 @@ const actions = {
     setDrawerVisible: value => ({ setState }) => {
         setState(draft => {
             draft.drawerVisible = value
+        })
+    },
+    setColorDrawerVisible: value => ({ setState }) => {
+        setState(draft => {
+            draft.colorDrawerVisible = value
         })
     },
     setModalVisible: value => ({ setState }) => {
@@ -99,7 +105,13 @@ const actions = {
 
             draft.stylesFilters = filters
         })
+    },
+    setColor: (color, state) => ({ setState }) => {
+        setState(draft => {
+            draft.customMarkerColors[state].background = color;
+        })
     }
+
 };
 
 const Store = createStore({

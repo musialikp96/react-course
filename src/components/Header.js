@@ -6,6 +6,7 @@ import { StylePickerToggle } from './StylePicker';
 import { useMapStore } from '../pages/store';
 import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
 import { DrawerToggle } from './ArticleDrawer';
+import { ColorPickerToggle } from './ColorPicker';
 
 const { Header: AntHeader } = AntLayout;
 
@@ -53,6 +54,7 @@ export default function Header() {
             <Logo>Wikipedia Map</Logo>
             <SearchBox id="searchbox" />
             <RightAside>
+                <ColorPickerToggle />
                 <DrawerToggle />
                 <LangToggle />
                 <StylePickerToggle />

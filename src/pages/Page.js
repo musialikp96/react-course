@@ -2,6 +2,7 @@ import { Layout as AntLayout } from 'antd';
 import styled from 'styled-components';
 import ArticleDrawer from '../components/ArticleDrawer';
 import ArticleModal from '../components/ArticleModal';
+import ColorPicker from '../components/ColorPicker';
 import GoogleMap from '../components/GoogleMap';
 import Header from '../components/Header';
 import StylePicker from '../components/StylePicker';
@@ -24,6 +25,7 @@ export default function Page() {
             <GoogleMapMediator />
             <Header />
             <Inner>
+                <ColorPicker />
                 <ArticleDrawer />
                 <ArticleModal />
                 <GoogleMap />

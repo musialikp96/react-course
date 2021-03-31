@@ -17,6 +17,7 @@ export const EVENT_TYPE = Object.freeze({
     DRAWER_TOGGLE_CLICKED: "DRAWER_TOGGLE_CLICKED",
     DRAWER_ARTICLE_CLICKED: "DRAWER_ARTICLE_CLICKED",
     MARKER_VISITED: "MARKER_VISITED",
+    COLOR_PICKER_TOGGLE_CLICKED: "COLOR_PICKER_TOGGLE_CLICKED",
 })
 
 const list = {};
@@ -62,7 +63,8 @@ export const useGoogleMapMediator = () => {
         setMapStyle,
         setStyleModalVisible,
         setStyleFilters,
-        setDrawerVisible
+        setDrawerVisible,
+        setColorDrawerVisible
     }] = useMapStore();
 
     const [lastCenter, setLastCenter] = useState();
@@ -147,6 +149,7 @@ export const useGoogleMapMediator = () => {
     attachListener(EVENT_TYPE.STYLE_CLICKED, setMapStyle)
     attachListener(EVENT_TYPE.STYLE_FILTER_CHANGED, filterChanged)
     attachListener(EVENT_TYPE.DRAWER_TOGGLE_CLICKED, () => setDrawerVisible(true))
+    attachListener(EVENT_TYPE.COLOR_PICKER_TOGGLE_CLICKED, () => setColorDrawerVisible(true))
     attachListener(EVENT_TYPE.DRAWER_ARTICLE_CLICKED, drawerArticleClicked)
 }
 
