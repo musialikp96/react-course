@@ -1,26 +1,12 @@
 import styled from 'styled-components';
+import { useMapStore } from '../pages/store';
 
-const colors = {
-  DEFAULT: {
-    background: '#ff7e23e0',
-    shadow: '#ffa769',
-  },
-  READ: {
-    background: '#237bffe0',
-    shadow: '#698bff',
-  },
-  VISITED: {
-    background: '#aaa',
-    shadow: '#222',
-  }
-}
-
-const Marker = styled.div`
-  background-color: ${({ state }) => colors[state].background};
+const StyledMarker = styled.div`
+  background-color: ${({ state, colors }) => colors[state].background};
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  box-shadow: 0px 0px 5px ${({ state }) => colors[state].shadow};
+  box-shadow: 0px 0px 5px ${({ state, colors }) => colors[state].shadow};
   opacity: 0.7;
   transition:all .2s ease;
   &:hover {
@@ -29,4 +15,12 @@ const Marker = styled.div`
   }
 `;
 
+const Marker = (props) => {
+
+  const [{ customMarkerColors }] = useMapStore();
+
+  return (
+    <StyledMarker {...props} colors={customMarkerColors} />
+  )
+}
 export default Marker;

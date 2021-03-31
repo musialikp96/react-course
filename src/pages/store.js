@@ -14,7 +14,21 @@ const initialState = {
     currentArticle: {},
     styles: [],
     mapStyle: '',
-    stylesFilters: {}
+    stylesFilters: {},
+    customMarkerColors: {
+        DEFAULT: {
+            background: '#ff7e23e0',
+            shadow: '#ffa769',
+        },
+        READ: {
+            background: '#237bffe0',
+            shadow: '#698bff',
+        },
+        VISITED: {
+            background: '#aaa',
+            shadow: '#222',
+        }
+    }
 };
 
 const actions = {
