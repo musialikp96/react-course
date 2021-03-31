@@ -31,6 +31,10 @@ export default function ArticleDrawer() {
         return markers.filter(({ color }) => color !== 'orange');
     }
 
+    const handleItemClick = (item) => {
+        emit(EVENT_TYPE.DRAWER_ARTICLE_CLICKED, item);
+    }
+
     return (
         <Drawer
             title="Visited markers"
@@ -43,7 +47,7 @@ export default function ArticleDrawer() {
                 size="large"
                 bordered
                 dataSource={filterMarkersToVisitedArticles(markers)}
-                renderItem={item => <List.Item>{item.title}</List.Item>}
+                renderItem={item => <List.Item onClick={() => handleItemClick(item)} style={{ cursor: 'pointer' }}>{item.title}</List.Item>}
             />
         </Drawer>
     )

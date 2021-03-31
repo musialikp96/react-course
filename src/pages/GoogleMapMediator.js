@@ -15,6 +15,7 @@ export const EVENT_TYPE = Object.freeze({
     STYLE_CLICKED: "STYLE_CLICKED",
     STYLE_FILTER_CHANGED: "STYLE_FILTER_CHANGED",
     DRAWER_TOGGLE_CLICKED: "DRAWER_TOGGLE_CLICKED",
+    DRAWER_ARTICLE_CLICKED: "DRAWER_ARTICLE_CLICKED",
 })
 
 const list = {};
@@ -126,6 +127,11 @@ export const useGoogleMapMediator = () => {
         });
     }
 
+    const drawerArticleClicked = ({ lat, lng }) => {
+        map.setCenter({ lat, lng });
+        setDrawerVisible(false);
+    }
+
     attachListener(EVENT_TYPE.MAP_CENTER_CHANGED, mapCenterChanged)
     attachListener(EVENT_TYPE.MAP_LOADED, mapLoaded)
     attachListener(EVENT_TYPE.LANG_CHANGED, langChanged)
@@ -135,6 +141,7 @@ export const useGoogleMapMediator = () => {
     attachListener(EVENT_TYPE.STYLE_CLICKED, setMapStyle)
     attachListener(EVENT_TYPE.STYLE_FILTER_CHANGED, filterChanged)
     attachListener(EVENT_TYPE.DRAWER_TOGGLE_CLICKED, () => setDrawerVisible(true))
+    attachListener(EVENT_TYPE.DRAWER_ARTICLE_CLICKED, drawerArticleClicked)
 }
 
 const GoogleMapMediator = () => {
