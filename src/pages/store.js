@@ -10,6 +10,7 @@ const initialState = {
     googleApiLoaded: false,
     modalVisible: false,
     styleModalVisible: false,
+    drawerVisible: false,
     currentArticle: {},
     styles: [],
     mapStyle: '',
@@ -34,6 +35,11 @@ const actions = {
     setGoogleApiLoaded: value => ({ setState }) => {
         setState(draft => {
             draft.googleApiLoaded = value
+        })
+    },
+    setDrawerVisible: value => ({ setState }) => {
+        setState(draft => {
+            draft.drawerVisible = value
         })
     },
     setModalVisible: value => ({ setState }) => {

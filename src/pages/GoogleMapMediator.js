@@ -14,6 +14,7 @@ export const EVENT_TYPE = Object.freeze({
     STYLE_TOGGLE_CLICKED: "STYLE_TOGGLE_CLICKED",
     STYLE_CLICKED: "STYLE_CLICKED",
     STYLE_FILTER_CHANGED: "STYLE_FILTER_CHANGED",
+    DRAWER_TOGGLE_CLICKED: "DRAWER_TOGGLE_CLICKED",
 })
 
 const list = {};
@@ -62,7 +63,8 @@ export const useGoogleMapMediator = () => {
         setMarkerColor,
         setMapStyle,
         setStyleModalVisible,
-        setStyleFilters
+        setStyleFilters,
+        setDrawerVisible
     }] = useMapStore();
 
     const [lastCenter, setLastCenter] = useState();
@@ -132,6 +134,7 @@ export const useGoogleMapMediator = () => {
     attachListener(EVENT_TYPE.STYLE_TOGGLE_CLICKED, () => setStyleModalVisible(true))
     attachListener(EVENT_TYPE.STYLE_CLICKED, setMapStyle)
     attachListener(EVENT_TYPE.STYLE_FILTER_CHANGED, filterChanged)
+    attachListener(EVENT_TYPE.DRAWER_TOGGLE_CLICKED, () => setDrawerVisible(true))
 }
 
 const GoogleMapMediator = () => {
