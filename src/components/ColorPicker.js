@@ -15,7 +15,7 @@ export const ColorPickerToggle = () => {
 
     return (
         <Button type="primary" onClick={showStyleModal}>
-            <UnorderedListOutlined />
+            🎨
         </Button>
     )
 }
