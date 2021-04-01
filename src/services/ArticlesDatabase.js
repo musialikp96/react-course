@@ -28,7 +28,7 @@ const ArticleDatabase = () => {
 
     function getItemsByKey(key) {
         try {
-            const items = localStorage.getItem(key);
+            let items = localStorage.getItem(key);
             if (items) {
                 return JSON.parse(items);
             } else {
@@ -77,8 +77,14 @@ const ArticleDatabase = () => {
         },
         setColor(color, state) {
             try {
-                colors[state].background = color;
-                localStorage.setItem(colorsKey, JSON.stringify(colors));
+                let newColors = {
+                    ...colors,
+                    [state]: {
+                        ...colors[state],
+                        background: color
+                    }
+                }
+                localStorage.setItem(colorsKey, JSON.stringify(newColors));
             } catch (error) {
                 console.error(error);
             }
