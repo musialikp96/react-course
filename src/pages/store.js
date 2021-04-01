@@ -1,5 +1,6 @@
 import { createStore, createHook, defaults } from 'react-sweet-state';
 import produce from 'immer';
+import ArticlesDatabase from '../services/ArticlesDatabase';
 
 defaults.devtools = true;
 defaults.mutator = (currentState, producer) => produce(currentState, producer);
@@ -15,20 +16,7 @@ const initialState = {
     styles: [],
     mapStyle: '',
     stylesFilters: {},
-    customMarkerColors: {
-        DEFAULT: {
-            background: '#ff7e23e0',
-            shadow: '#ffa769',
-        },
-        READ: {
-            background: '#237bffe0',
-            shadow: '#698bff',
-        },
-        VISITED: {
-            background: '#aaa',
-            shadow: '#222',
-        }
-    },
+    customMarkerColors: ArticlesDatabase.getColors(),
     colorDrawerVisible: false
 };
 

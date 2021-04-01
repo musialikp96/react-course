@@ -4,7 +4,7 @@ import { CirclePicker } from 'react-color';
 import { useMapStore } from '../pages/store';
 import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
 import { UnorderedListOutlined } from '@ant-design/icons';
-import { ARTICLE_STATE } from '../services/ArticlesDatabase';
+import ArticlesDatabase, { ARTICLE_STATE } from '../services/ArticlesDatabase';
 import Title from 'antd/lib/typography/Title';
 
 export const ColorPickerToggle = () => {
@@ -22,11 +22,16 @@ export const ColorPickerToggle = () => {
 
 export default function ColorPicker() {
 
-    const [{ colorDrawerVisible, customMarkerColors }, { setColorDrawerVisible, setColor }] = useMapStore();
+    const [{ colorDrawerVisible, customMarkerColors }, { setColorDrawerVisible, setColor: setColorToStore }] = useMapStore();
 
     const onClose = () => {
         setColorDrawerVisible(false);
     };
+
+    const setColor = (color, state) => {
+        setColorToStore(color, state)
+        ArticlesDatabase.setColor(color, state)
+    }
 
     return (
         <Drawer

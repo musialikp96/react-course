@@ -1,4 +1,5 @@
 const articlesKey = 'articles';
+const colorsKey = 'colors';
 
 export const ARTICLE_STATE = Object.freeze({
     DEFAULT: "DEFAULT",
@@ -6,14 +7,30 @@ export const ARTICLE_STATE = Object.freeze({
     VISITED: "VISITED",
 })
 
-const ArticleDatabase = () => {
-    let articles = getArticles();
+let defaultColors = {
+    DEFAULT: {
+        background: '#ff7e23e0',
+        shadow: '#ffa769',
+    },
+    READ: {
+        background: '#237bffe0',
+        shadow: '#698bff',
+    },
+    VISITED: {
+        background: '#aaa',
+        shadow: '#222',
+    }
+}
 
-    function getArticles() {
+const ArticleDatabase = () => {
+    let articles = getItemsByKey(articlesKey);
+    let colors = getColors();
+
+    function getItemsByKey(key) {
         try {
-            const articles = localStorage.getItem(articlesKey);
-            if (articles) {
-                return JSON.parse(articles);
+            const items = localStorage.getItem(key);
+            if (items) {
+                return JSON.parse(items);
             } else {
                 return [];
             }
@@ -21,6 +38,11 @@ const ArticleDatabase = () => {
             console.error(error);
             return [];
         }
+    }
+
+    function getColors() {
+        if (!getItemsByKey(colorsKey).DEFAULT) return defaultColors;
+        return getItemsByKey(colorsKey)
     }
 
     function addArticle(title, state = ARTICLE_STATE.READ) {
@@ -39,7 +61,7 @@ const ArticleDatabase = () => {
 
     const api = {
         refresh() {
-            articles = getArticles()
+            articles = getItemsByKey(articlesKey)
         },
         isArticleRead(title) {
             return articles.find(article => title === article.title)?.state === ARTICLE_STATE.READ;
@@ -52,7 +74,16 @@ const ArticleDatabase = () => {
         },
         setArticleState(title, state) {
             addArticle(title, state)
-        }
+        },
+        setColor(color, state) {
+            try {
+                colors[state].background = color;
+                localStorage.setItem(colorsKey, JSON.stringify(colors));
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        getColors
     }
 
     return api;
