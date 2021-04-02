@@ -1,24 +1,8 @@
-import { Button, Drawer } from 'antd';
-import { useState } from 'react';
+import { Drawer } from 'antd';
 import { CirclePicker } from 'react-color';
 import { useMapStore } from '../pages/store';
-import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
-import { UnorderedListOutlined } from '@ant-design/icons';
 import ArticlesDatabase, { ARTICLE_STATE } from '../services/ArticlesDatabase';
 import Title from 'antd/lib/typography/Title';
-
-export const ColorPickerToggle = () => {
-
-    const showStyleModal = () => {
-        emit(EVENT_TYPE.COLOR_PICKER_TOGGLE_CLICKED);
-    }
-
-    return (
-        <Button type="primary" onClick={showStyleModal}>
-            🎨
-        </Button>
-    )
-}
 
 export default function ColorPicker() {
 

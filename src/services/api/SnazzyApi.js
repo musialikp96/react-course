@@ -7,7 +7,7 @@ const client = ky.create({
 })
 
 const api = {
-    getStyles(page, stylesFilters = {}) {
+    getStyles(stylesFilters = {}) {
 
         let queryString = '&' + Object.keys(stylesFilters).map(key => key + '=' + stylesFilters[key]).join('&');
         return client

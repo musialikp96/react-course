@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Modal } from 'antd';
 import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
 import { useMapStore } from '../pages/store';
-import ArticlesDatabase, { ARTICLE_STATE } from '../services/ArticlesDatabase';
+import { ARTICLE_STATE } from '../services/ArticlesDatabase';
 
 export default function ArticleModal() {
 

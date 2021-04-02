@@ -1,9 +1,8 @@
 import { useMapStore } from '../pages/store';
-import { Row, Col, Modal, Button } from 'antd';
+import { Row, Col, Modal } from 'antd';
 import StylePreview from './StylePreview';
 import { EVENT_TYPE, emit } from '../pages/GoogleMapMediator';
 import Select from './Select';
-import { BgColorsOutlined } from '@ant-design/icons';
 
 const filters = {
     tag: [
@@ -31,18 +30,7 @@ const filters = {
     ]
 }
 
-export const StylePickerToggle = () => {
 
-    const showStyleModal = () => {
-        emit(EVENT_TYPE.STYLE_TOGGLE_CLICKED);
-    }
-
-    return (
-        <Button type="primary" onClick={showStyleModal}>
-            <BgColorsOutlined />
-        </Button>
-    )
-}
 
 export default function StylePicker() {
 

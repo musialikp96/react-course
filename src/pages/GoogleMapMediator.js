@@ -122,7 +122,7 @@ export const useGoogleMapMediator = () => {
     }
 
     const updateStyles = async (stylesFilters = {}) => {
-        let { styles } = await SnazzyApi.getStyles(1, stylesFilters);
+        let { styles } = await SnazzyApi.getStyles(stylesFilters);
         addStyles(styles);
     }
 

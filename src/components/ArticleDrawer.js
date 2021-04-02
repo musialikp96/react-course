@@ -1,24 +1,7 @@
-
 import { useMapStore } from '../pages/store';
-import { List, Drawer, Button } from 'antd';
+import { List, Drawer } from 'antd';
 import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
-import { UnorderedListOutlined } from '@ant-design/icons';
 import { ARTICLE_STATE } from '../services/ArticlesDatabase';
-
-
-
-export const DrawerToggle = () => {
-
-    const showStyleModal = () => {
-        emit(EVENT_TYPE.DRAWER_TOGGLE_CLICKED);
-    }
-
-    return (
-        <Button type="primary" onClick={showStyleModal}>
-            <UnorderedListOutlined />
-        </Button>
-    )
-}
 
 export default function ArticleDrawer() {
 

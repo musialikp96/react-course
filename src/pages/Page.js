@@ -4,7 +4,7 @@ import ArticleDrawer from '../components/ArticleDrawer';
 import ArticleModal from '../components/ArticleModal';
 import ColorPicker from '../components/ColorPicker';
 import GoogleMap from '../components/GoogleMap';
-import Header from '../components/Header';
+import Header from '../components/header/Header';
 import StylePicker from '../components/StylePicker';
 import GoogleMapMediator from './GoogleMapMediator';
 

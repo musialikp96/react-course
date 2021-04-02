@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { Layout as AntLayout, Input, Space } from 'antd';
 import styled from 'styled-components';
-import LangToggle from './lang/LangToggle';
-import { StylePickerToggle } from './StylePicker';
-import { useMapStore } from '../pages/store';
-import { emit, EVENT_TYPE } from '../pages/GoogleMapMediator';
-import { DrawerToggle } from './ArticleDrawer';
-import { ColorPickerToggle } from './ColorPicker';
+
+import { useMapStore } from '../../pages/store';
+import { emit, EVENT_TYPE } from '../../pages/GoogleMapMediator';
+
+import ColorPickerToggle from './ColorPickerToggle';
+import ArticleListToggle from './ArticleListToggle';
+import LangToggle from './LangToggle';
+import StylePickerToggle from './StylePickerToggle';
 
 const { Header: AntHeader } = AntLayout;
 
@@ -54,8 +56,8 @@ export default function Header() {
             <Logo>Wikipedia Map</Logo>
             <SearchBox id="searchbox" />
             <RightAside>
+                <ArticleListToggle />
                 <ColorPickerToggle />
-                <DrawerToggle />
                 <LangToggle />
                 <StylePickerToggle />
             </RightAside>
